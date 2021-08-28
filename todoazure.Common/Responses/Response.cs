@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-
-namespace todoazure.Common.Responses
+﻿namespace todoazure.Common.Responses
 {
     public class Response
     {

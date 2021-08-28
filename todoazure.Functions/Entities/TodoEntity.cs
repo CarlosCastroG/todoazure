@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.Storage.Table;
+using System;
 
-namespace todoazure.Common.Models
+namespace todoazure.Functions.Entities
 {
-    public class Todo
+    public class TodoEntity : TableEntity
     {
         public string IdEmployee { get; set; }
 
