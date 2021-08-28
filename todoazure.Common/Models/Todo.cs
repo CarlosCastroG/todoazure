@@ -13,6 +13,6 @@ namespace todoazure.Common.Models
 
         public int Type { get; set; }
 
-        public Boolean Consolidated { get; set; }
+        public bool Consolidated { get; set; }
     }
 }
