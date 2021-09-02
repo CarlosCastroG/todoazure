@@ -162,5 +162,37 @@ namespace todoazure.Functions.Functions
                 Result = todoEntity
             });
         }
+        
+        
+        [FunctionName(nameof(DeleteTodo))]
+        public static async Task<IActionResult> DeleteTodo(
+                [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "todo/{id}")] HttpRequest req,
+                [Table("todoAzure", "TODO", "{id}", Connection = "AzureWebJobsStorage")] TodoEntity todoEntity,
+                [Table("todoAzure", Connection = "AzureWebJobsStorage")] CloudTable todoTable,
+                string id,
+                ILogger log)
+        {
+            log.LogInformation($"Dele todo: {id}, received.");
+
+            if (todoEntity == null)
+            {
+                return new BadRequestObjectResult(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Todo not found."
+                });
+            }
+
+            await todoTable.ExecuteAsync(TableOperation.Delete(todoEntity));
+            string message = $"Todo: {todoEntity.RowKey}, deleted.";
+            log.LogInformation(message);
+
+            return new OkObjectResult(new Response
+            {
+                IsSuccess = true,
+                Message = message,
+                Result = todoEntity
+            });
+        }
     }
 }
