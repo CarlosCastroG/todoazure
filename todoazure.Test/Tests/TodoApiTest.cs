@@ -69,7 +69,7 @@ namespace todoazure.Test.Tests
         }
 
         [Fact]
-        public async void GetTodoById_Should_Return_200()
+        public void GetTodoById_Should_Return_200()
         {
             // Arrenge
             MockCloudTableTodos mockEmployee = new MockCloudTableTodos(new Uri("http://127.0.0.1:10002/devstoreaccount1/reports"));
@@ -86,6 +86,20 @@ namespace todoazure.Test.Tests
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
         }
 
+        [Fact]
+        public async void GetAllTodos_Should_Return_200()
+        {
+            // Arrenge
+            MockCloudTableTodos mockEmployee = new MockCloudTableTodos(new Uri("http://127.0.0.1:10002/devstoreaccount1/reports"));
+            Todo EmployeeRequest = TestFactory.GetTodoRequest();
+            DefaultHttpRequest request = TestFactory.CreateHttpRequest(EmployeeRequest);
 
+            // Act
+            IActionResult response = await TodoAPI.GetAllTodos(request, mockEmployee, logger);
+           
+            // Assert
+            OkObjectResult result = (OkObjectResult)response;
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
+        }
     }
 }
